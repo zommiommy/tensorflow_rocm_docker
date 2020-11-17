@@ -4,14 +4,14 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile
+      args:
+        USER_ID: $(id -u ${USER})
+        GROUP_ID: $(id -g ${USER})
     command: tmux new-session -s "jupyter" python3 -m jupyter notebook --no-browser --allow-root --ip=0.0.0.0 --port=10000
     user: $UID:$GID
     working_dir: $PWD
     tty: true
     stdin_open: true
-    args:
-      USER_ID: $(id -u ${USER})
-      GROUP_ID: $(id -g ${USER})
     devices:
       - "/dev/kfd:/dev/kfd"
       - "/dev/dri:/dev/dri"
