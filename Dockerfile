@@ -1,5 +1,18 @@
-FROM rocm/tensorflow
+###############################################################################
+# Setup the user and the environment
+###############################################################################
+# based on https://medium.com/faun/set-current-host-user-for-docker-container-4e521cef9ffc
+ARG DOCKER_BASE_IMAGE=rocm/tensorflow
+# this arguments will be overwritten by the
+# host env vars
+ARG USER=docker
+ARG UID=1000
+ARG GID=1000
 
+# Import the base image
+FROM $DOCKER_BASE_IMAGE
+
+# Install the basic tools
 RUN apt-get update -qyy && \
     apt-get install -qyy \
     build-essential\
@@ -10,11 +23,17 @@ RUN apt-get update -qyy && \
     libnuma-dev \
     wget curl tmux byobu htop nano vim 
 
+# Using the same encrypted password as host
+COPY /etc/group /etc/group 
+COPY /etc/passwd /etc/passwd
+COPY /etc/shadow /etc/shadow
+# Setup the user
 USER ${UID}:${GID}
 WORKDIR /home/${USER}
-
+###############################################################################
+# Actual app configuration
+###############################################################################
 RUN python3 -m pip install maturin
-
 
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y \
     && python3 -m pip install --no-cache-dir cffi
