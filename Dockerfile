@@ -23,10 +23,9 @@ RUN apt-get update -qyy && \
     libnuma-dev \
     wget curl tmux byobu htop nano vim 
 
-# Using the same encrypted password as host
-COPY /etc/group /etc/group 
-COPY /etc/passwd /etc/passwd
-COPY /etc/shadow /etc/shadow
+# Using unencrypted password/ specifying password
+RUN useradd -m ${USER} --uid=${UID} && echo "${USER}:${PW}" | chpasswd
+
 # Setup the user
 USER ${UID}:${GID}
 WORKDIR /home/${USER}
