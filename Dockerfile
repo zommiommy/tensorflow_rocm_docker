@@ -25,7 +25,7 @@ RUN apt-get update -qyy && \
     wget curl tmux byobu htop nano vim 
 
 # Using unencrypted password/ specifying password
-RUN useradd -m ${USER} --uid=${UID} && echo "${USER}:${PW}" | chpasswd
+RUN echo "${USER} ${UID} ${GID}" && useradd -m ${USER} --uid=${UID} && echo "${USER}:${PW}" | chpasswd
 
 # Setup the user
 USER ${UID}:${GID}
