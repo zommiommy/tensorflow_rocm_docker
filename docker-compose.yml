@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  jupyter:
+    build:
+      context: ./
+      dockerfile: ./JupyterDocker
+    command: tmux new-session -s "jupyter" python3 -m jupyter notebook --no-browser --allow-root --ip=0.0.0.0 --port=10000
+    user: $UID:$GID
+    working_dir: $PWD
+    tty: true
+    stdin_open: true
+    devices:
+      - "/dev/kfd:/dev/kfd"
+      - "/dev/dri:/dev/dri"
+    group_add:
+      - video
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - "10000:10000"
+    volumes:
+      - ./:/home/$USER
+      - /etc/group:/etc/group:ro
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/shadow:/etc/shadow:ro
