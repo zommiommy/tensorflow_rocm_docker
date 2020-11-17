@@ -22,11 +22,11 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y \
 ENV PATH /home/${USER}/.cargo/bin:$PATH
 
 # Install the required rust version
-RUN rustup default nightly-2020-06-01
+RUN /home/${USER}/.cargo/bin/rustup default nightly-2020-06-01
 
-RUN cargo install maturin
-RUN cargo install cargo-fuzz
-RUN cargo install honggfuzz
+RUN /home/${USER}/.cargo/bin/cargo install maturin
+RUN /home/${USER}/.cargo/bin/cargo install cargo-fuzz
+RUN /home/${USER}/.cargo/bin/cargo install honggfuzz
 
 ADD requirements.txt /home/${USER}/requirements.txt
 RUN python3 -m pip install -r /home/${USER}/requirements.txt
