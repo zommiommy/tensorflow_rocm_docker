@@ -8,6 +8,7 @@ ARG DOCKER_BASE_IMAGE=rocm/tensorflow
 ARG USER=docker
 ARG UID=1000
 ARG GID=1000
+ARG PW=password
 
 # Import the base image
 FROM $DOCKER_BASE_IMAGE
