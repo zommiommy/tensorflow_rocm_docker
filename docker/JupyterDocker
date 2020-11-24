@@ -1,4 +1,4 @@
-OM rocm/tensorflow
+FROM rocm/tensorflow
 
 RUN apt-get update -qyy && \
     apt-get install -qyy \
