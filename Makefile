@@ -1,5 +1,5 @@
 run:
 	(\
 	cd docker;\
-	make run
+	make run;\
 	)
