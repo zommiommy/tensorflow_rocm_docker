@@ -29,4 +29,6 @@ RUN cargo install honggfuzz
 ADD requirements.txt /io/requirements.txt
 RUN python3 -m pip install -r /io/requirements.txt
 
+ENV LD_LIBRARY_PATH=/opt/rocm-3.9.0/lib/
+
 WORKDIR /io
